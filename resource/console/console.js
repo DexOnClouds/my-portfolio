@@ -9,19 +9,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Preload and start music
     bgMusic.load();
-    bgMusic.addEventListener('canplaythrough', () => {
-        // Try to start music immediately
-        bgMusic.play().catch(e => {
-            // If autoplay is blocked, wait for user interaction
-            document.addEventListener('click', () => {
-                if (!isMusicPlaying) {
-                    bgMusic.play().catch(e => console.log('Music autoplay prevented'));
-                    isMusicPlaying = true;
-                }
-            }, { once: true });
-        });
-        isMusicPlaying = true;
-    }, { once: true });
+
+    // Force autoplay
+    function tryPlayMusic() {
+        bgMusic.play()
+            .then(() => {
+                isMusicPlaying = true;
+            })
+            .catch(() => {
+                // If failed, try again after a short delay
+                setTimeout(tryPlayMusic, 1000);
+            });
+    }
+
+    // Start trying to play immediately
+    tryPlayMusic();
+
+    // Also try on any user interaction
+    ['click', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, () => {
+            if (!isMusicPlaying) {
+                tryPlayMusic();
+            }
+        }, { once: true });
+    });
 
     const asciiArt = {
         heart: `
@@ -87,8 +98,7 @@ Fun Commands:
 Currently: ${isMusicPlaying ? 'Playing' : 'Paused'}`,
 
         play: () => {
-            bgMusic.play();
-            isMusicPlaying = true;
+            tryPlayMusic();
             return 'Music started playing';
         },
 
