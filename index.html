@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="resource/console/console.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Rubik+Mono+One&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'CANDY BABY';
@@ -20,40 +20,81 @@
         .custom-font {
             font-family: 'CANDY BABY', sans-serif;
         }
-        .slider {
-            overflow: hidden;
-            position: relative;
+        .header-text {
+            width: 100%;
+            overflow: visible;
         }
-        .slide-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
+        .letter-span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-200vh);
+            white-space: pre;
         }
-        .slide {
-            flex: 0 0 100%;
+        .letter-span.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.17, 0.84, 0.44, 1),
+                        opacity 0.5s ease;
+        }
+        .letter-span.bounce {
+            animation: bounceEffect 1s cubic-bezier(0.28, 0.84, 0.42, 1) forwards;
+        }
+        .letter-span.hide {
+            opacity: 0;
+            transform: translateY(200vh);
+            transition: transform 0.8s cubic-bezier(0.6, 0.04, 0.98, 0.335),
+                        opacity 0.5s ease;
+        }
+        @keyframes bounceEffect {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-40px); }
+            35% { transform: translateY(0); }
+            55% { transform: translateY(-20px); }
+            65% { transform: translateY(0); }
+            75% { transform: translateY(-10px); }
+            85% { transform: translateY(0); }
+        }
+        .falling-letter {
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .bounce-in {
+            animation: bounceIn 0.5s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
+        }
+        .bounce-out {
+            animation: bounceOut 0.5s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
+        }
+        @keyframes bounceIn {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+            75% { transform: translateY(10px); }
+        }
+        @keyframes bounceOut {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(100px); }
         }
     </style>
+    <script src="resource/header/header.js"></script>
     <audio id="bgMusic" loop preload="auto" autoplay>
         <source src="assets/music/background.mp3" type="audio/mp3">
     </audio>
 </head>
 <body class="text-white min-h-screen" style="background-color: #1d1e1e;">
     <!-- Header Section -->
-    <header class="header-container py-20 text-center">
+    <header class="header-container py-20 text-center overflow-visible">
         <div class="header-text">
-            <h1 class="custom-font text-6xl md:text-8xl bg-gradient-to-t from-black to-white text-transparent bg-clip-text drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]">
-                DexOnClouds
-            </h1>
+            <h1 class="custom-font text-6xl md:text-8xl text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.4)]"></h1>
         </div>
         <!-- Social Icons -->
         <div class="social-icons mt-8 flex justify-center gap-8">
             <a href="https://github.com/DexOnClouds" target="_blank" class="social-icon">
-                <img src="assets/icons/github.svg" alt="GitHub" class="w-10 h-10 transition-all duration-300 hover:scale-125 social-img">
-            </a>
-            <a href="https://discord.gg/tCwM5Hcunb" target="_blank" class="social-icon">
-                <img src="assets/icons/discord.svg" alt="Discord" class="w-10 h-10 transition-all duration-300 hover:scale-125 social-img">
+                <img src="assets/icons/github.svg" alt="GitHub" class="w-10 h-10 social-img">
             </a>
             <a href="https://youtube.com/@DexOnClouds" target="_blank" class="social-icon">
-                <img src="assets/icons/youtube.svg" alt="YouTube" class="w-10 h-10 transition-all duration-300 hover:scale-125 social-img">
+                <img src="assets/icons/youtube.svg" alt="YouTube" class="w-10 h-10 social-img">
+            </a>
+            <a href="https://discord.gg/example" target="_blank" class="social-icon">
+                <img src="assets/icons/discord.svg" alt="Discord" class="w-10 h-10 social-img">
             </a>
         </div>
     </header>
@@ -139,7 +180,6 @@
         </div>
     </div>
 
-    <script src="resource/header/header.js" defer></script>
     <script src="resource/slider/slider.js"></script>
     <script src="resource/console/console.js"></script>
     <script>
