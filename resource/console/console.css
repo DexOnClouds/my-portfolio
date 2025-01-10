@@ -1,0 +1,171 @@
+@font-face {
+    font-family: 'Hack';
+    src: url('../../assets/fonts/Hack-Regular.ttf') format('truetype');
+}
+
+.console-container {
+    width: 1400px;
+    max-width: 95%;
+    margin: 40px auto;
+    background: rgba(29, 30, 30, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.console-header {
+    background: #3c3f41;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.console-title {
+    color: #e0e0e0;
+    font-family: 'Hack', monospace;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.console-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.console-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.console-button.close {
+    background-color: #ff5f56;
+}
+
+.console-button.minimize {
+    background-color: #ffbd2e;
+}
+
+.console-button.maximize {
+    background-color: #27c93f;
+}
+
+.console-button:hover {
+    filter: brightness(0.9);
+}
+
+.console-content {
+    padding: 20px;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+    font-family: 'Hack', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: white;
+}
+
+.console-line {
+    display: flex;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.console-prompt {
+    color: #27c93f;
+    margin-right: 10px;
+}
+
+.console-text {
+    flex: 1;
+}
+
+.console-output {
+    color: #a0a0a0;
+    margin: 5px 0 10px 20px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Blinking cursor */
+.console-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1.2em;
+    background: white;
+    margin-left: 1px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+    position: relative;
+    top: -1px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Scrollbar Styling */
+.console-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.console-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.console-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .console-container {
+        width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .console-container {
+        width: 800px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .console-container {
+        width: 600px;
+    }
+    .console-content {
+        min-height: 250px;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .console-container {
+        width: 95%;
+        margin: 20px auto;
+    }
+    .console-content {
+        padding: 15px;
+        min-height: 200px;
+        font-size: 0.85rem;
+    }
+}
+
+.welcome-message {
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.welcome-message span {
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(39, 201, 63, 0.1);
+}

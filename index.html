@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DexOnClouds Portfolio</title>
+    <link rel="icon" type="image/png" href="assets/fevicon.png?v=2">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="resource/header/header.css">
+    <link rel="stylesheet" href="resource/slider/slider.css">
+    <link rel="stylesheet" href="resource/console/console.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'CANDY BABY';
+            src: url('assets/fonts/CANDY BABY.ttf') format('truetype');
+        }
+        .custom-font {
+            font-family: 'CANDY BABY', sans-serif;
+        }
+        .slider {
+            overflow: hidden;
+            position: relative;
+        }
+        .slide-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            flex: 0 0 100%;
+        }
+    </style>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="assets/music/background.mp3" type="audio/mp3">
+    </audio>
+</head>
+<body class="text-white min-h-screen" style="background-color: #1d1e1e;">
+    <!-- Header Section -->
+    <header class="header-container py-20 text-center">
+        <div class="header-text">
+            <h1 class="custom-font text-6xl md:text-8xl bg-gradient-to-t from-black to-white text-transparent bg-clip-text drop-shadow-[0_5px_5px_rgba(0,0,0,0.3)]">
+                DexOnClouds
+            </h1>
+        </div>
+        <!-- Social Icons -->
+        <div class="social-icons mt-8 flex justify-center gap-8">
+            <a href="https://github.com/DexOnClouds" target="_blank" class="social-icon">
+                <img src="assets/icons/github.svg" alt="GitHub" class="w-10 h-10 transition-all duration-300 hover:scale-125 social-img">
+            </a>
+            <a href="https://discord.gg/tCwM5Hcunb" target="_blank" class="social-icon">
+                <img src="assets/icons/discord.svg" alt="Discord" class="w-10 h-10 transition-all duration-300 hover:scale-125 social-img">
+            </a>
+            <a href="https://youtube.com/@DexOnClouds" target="_blank" class="social-icon">
+                <img src="assets/icons/youtube.svg" alt="YouTube" class="w-10 h-10 transition-all duration-300 hover:scale-125 social-img">
+            </a>
+        </div>
+    </header>
+
+    <!-- Image Slider Section -->
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide">
+                <img src="assets/images/1.png" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="assets/images/2.png" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="assets/images/3.png" alt="Slide 3">
+            </div>
+            <div class="slide">
+                <img src="assets/images/4.png" alt="Slide 4">
+            </div>
+        </div>
+    </div>
+
+     <!-- Info Container -->
+     <div class="info-container">
+        <div class="info-item">
+            <img src="assets/icons/male.svg" alt="Gender" class="info-icon">
+            <span class="info-text">He/Him</span>
+        </div>
+        <div class="info-item">
+            <img src="assets/icons/age.svg" alt="Age" class="info-icon">
+            <span class="info-text" id="age">20</span>
+        </div>
+        <script>
+            function calculateAge(birthDate) {
+                const birth = new Date(birthDate);
+                const today = new Date('2025-01-10'); // Using provided current time
+                
+                // Calculate years
+                let years = today.getFullYear() - birth.getFullYear();
+                
+                // Adjust year if birthday hasn't occurred this year
+                if (today.getMonth() < birth.getMonth() || 
+                    (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) {
+                    years--;
+                }
+                
+                // Calculate days since last birthday
+                const lastBirthday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate());
+                if (lastBirthday > today) {
+                    lastBirthday.setFullYear(lastBirthday.getFullYear() - 1);
+                }
+                const daysSinceLastBirthday = Math.floor((today - lastBirthday) / (1000 * 60 * 60 * 24));
+                
+                return `${years} years, ${daysSinceLastBirthday} days`;
+            }
+            document.addEventListener('DOMContentLoaded', () => {
+                const ageElement = document.getElementById('age');
+                if (ageElement) {
+                    ageElement.textContent = calculateAge('2004-07-19');
+                }
+            });
+        </script>
+    </div>
+
+    <!-- Quote Section -->
+    <div class="quote-container">
+        <p class="quote-text">Life seems but a quick succession of busy nothings.</p>
+        <span class="quote-author">— Jane Austen</span>
+    </div>
+
+    <!-- Console Section -->
+    <div class="console-container">
+        <div class="console-header">
+            <div class="console-buttons">
+                <div class="console-button close"></div>
+                <div class="console-button minimize"></div>
+                <div class="console-button maximize"></div>
+            </div>
+            <div class="console-title">console.log</div>
+        </div>
+        <div class="console-content">
+            <!-- Console content will be dynamically populated -->
+        </div>
+    </div>
+
+    <script src="resource/header/header.js" defer></script>
+    <script src="resource/slider/slider.js"></script>
+    <script src="resource/console/console.js"></script>
+    <script>
+        // Function to load and display images
+        async function loadImages() {
+            const slideTrack = document.getElementById('slideTrack');
+            const images = [
+                'assets/images/1.png',
+                'assets/images/2.png',
+                'assets/images/3.png',
+                'assets/images/4.png'
+            ];
+            
+            // Add your images here
+            const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+            
+            // Create slides
+            images.forEach((imagePath, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.className = 'w-full h-[500px] object-cover';
+                img.alt = `Slide ${index + 1}`;
+                slide.appendChild(img);
+                slideTrack.appendChild(slide);
+            });
+
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+            
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                slideTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }
+
+            // Auto-advance slides every 3 seconds
+            setInterval(nextSlide, 3000);
+        }
+
+        // Load images when the page loads
+        window.addEventListener('load', loadImages);
+    </script>
+</body>
+</html>
