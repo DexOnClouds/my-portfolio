@@ -126,8 +126,11 @@ Presently, I'm deeply passionate about coding, reading, watching movies, and ani
         projects: () => {
             const output = document.createElement('div');
             output.className = 'console-output';
-            output.innerHTML = `For now I have just completed a study tracker website:<br>
-<a href="https://dailyduck.vercel.app/" target="_blank" style="color: #27c93f; text-decoration: underline;" onclick="this.blur();">https://dailyduck.vercel.app/</a>`;
+            output.innerHTML = `These are the projects I have worked on:<br>
+<a href="https://focusbetter.top/" target="_blank" style="color: #27c93f; text-decoration: underline;" onclick="this.blur();">https://focusbetter.top/</a> <br>
+<a href="https://github.com/DexOnClouds/yourquizbuddy" target="_blank" style="color: #27c93f; text-decoration: underline;" onclick="this.blur();">https://github.com/DexOnClouds/yourquizbuddy</a> <br>
+<a href="https://aurora-dash.vercel.app/" target="_blank" style="color: #27c93f; text-decoration: underline;" onclick="this.blur();">Aurora - Discord Bot </a>`; 
+
             consoleContent.insertBefore(output, currentLine);
             
             // Remove focus from any links
@@ -208,37 +211,26 @@ Presently, I'm deeply passionate about coding, reading, watching movies, and ani
     function createNewLine() {
         const line = document.createElement('div');
         line.className = 'console-line';
-
+        
         const prompt = document.createElement('span');
         prompt.className = 'console-prompt';
         prompt.textContent = '>';
-
-        const text = document.createElement('span');
-        text.className = 'console-text';
-
-        const cursor = document.createElement('span');
-        cursor.className = 'console-cursor';
-
-        text.appendChild(document.createTextNode(currentInput));
-        text.appendChild(cursor);
-
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'console-input';
+        input.autocomplete = 'off';
+        input.spellcheck = false;
+        
         line.appendChild(prompt);
-        line.appendChild(text);
-
+        line.appendChild(input);
+        
         return line;
     }
 
     function updateLine() {
-        if (currentLine) {
-            const text = currentLine.querySelector('.console-text');
-            text.innerHTML = '';
-            text.appendChild(document.createTextNode(currentInput));
-
-            // Create new cursor
-            const cursor = document.createElement('span');
-            cursor.className = 'console-cursor';
-            text.appendChild(cursor);
-        }
+        const input = currentLine.querySelector('input');
+        currentInput = input.value;
     }
 
     function executeCommand(cmd) {
@@ -288,38 +280,44 @@ Type <span style="color: #27c93f">help</span> to discover available commands.`;
 
     initConsole();
 
+    // Add "have a nice day" message
+    const welcomeMessage = document.createElement('div');
+    welcomeMessage.className = 'console-output';
+    welcomeMessage.style.color = '#27c93f';
+    welcomeMessage.textContent = 'Have a nice day! Type "help" for available commands.';
+    consoleContent.insertBefore(welcomeMessage, currentLine);
+
     // Event listeners
     document.addEventListener('keydown', (e) => {
+        const input = currentLine.querySelector('input');
+        
         if (e.key === 'Enter') {
-            executeCommand(currentInput);
-        } else if (e.key === 'Backspace') {
-            if (currentInput.length > 0) {
-                currentInput = currentInput.slice(0, -1);
-                updateLine();
-            }
-        } else if (e.key === 'ArrowUp') {
-            if (historyIndex > 0) {
-                historyIndex--;
-                currentInput = commandHistory[historyIndex];
-                updateLine();
-            }
-        } else if (e.key === 'ArrowDown') {
-            if (historyIndex < commandHistory.length - 1) {
-                historyIndex++;
-                currentInput = commandHistory[historyIndex];
-            } else {
+            const command = input.value.trim();
+            if (command) {
+                commandHistory.push(command);
                 historyIndex = commandHistory.length;
+                executeCommand(command);
+                input.value = '';
                 currentInput = '';
             }
-            updateLine();
-        } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-            currentInput += e.key;
-            updateLine();
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                input.value = commandHistory[historyIndex];
+                currentInput = input.value;
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                input.value = commandHistory[historyIndex];
+                currentInput = input.value;
+            } else {
+                historyIndex = commandHistory.length;
+                input.value = '';
+                currentInput = '';
+            }
         }
-    });
-
-    // Focus handling
-    consoleContent.addEventListener('click', () => {
-        currentLine.scrollIntoView({ behavior: 'smooth' });
     });
 });

@@ -79,8 +79,17 @@
     margin-right: 10px;
 }
 
-.console-text {
+.console-input {
     flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: 'Hack', monospace;
+    font-size: 0.95rem;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    width: 100%;
 }
 
 .console-output {
@@ -90,7 +99,6 @@
     word-break: break-all;
 }
 
-/* Blinking cursor */
 .console-cursor {
     display: inline-block;
     width: 8px;
@@ -108,7 +116,6 @@
     50% { opacity: 0; }
 }
 
-/* Scrollbar Styling */
 .console-content::-webkit-scrollbar {
     width: 8px;
 }
@@ -122,7 +129,6 @@
     border-radius: 4px;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 1200px) {
     .console-container {
         width: 1000px;
@@ -142,6 +148,21 @@
     .console-content {
         min-height: 250px;
         font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .console-container {
+        margin: 20px auto;
+        max-height: 80vh;
+    }
+
+    .console-content {
+        padding: 15px;
+    }
+
+    .console-input {
+        font-size: 16px; /* Prevent iOS zoom */
     }
 }
 
@@ -168,4 +189,8 @@
     padding: 2px 6px;
     border-radius: 4px;
     background: rgba(39, 201, 63, 0.1);
+}
+
+.mobile-input-container {
+    display: none;
 }

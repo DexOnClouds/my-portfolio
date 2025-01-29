@@ -130,32 +130,56 @@
         <script>
             function calculateAge(birthDate) {
                 const birth = new Date(birthDate);
-                const today = new Date('2025-01-10'); // Using provided current time
+                const today = new Date();
                 
                 // Calculate years
                 let years = today.getFullYear() - birth.getFullYear();
                 
-                // Adjust year if birthday hasn't occurred this year
-                if (today.getMonth() < birth.getMonth() || 
-                    (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) {
+                // Calculate months
+                let months = today.getMonth() - birth.getMonth();
+                
+                // Calculate days
+                let days = today.getDate() - birth.getDate();
+                
+                // Adjust for negative days
+                if (days < 0) {
+                    months--;
+                    // Get days in the previous month
+                    const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                    days += lastMonth.getDate();
+                }
+                
+                // Adjust for negative months
+                if (months < 0) {
                     years--;
+                    months += 12;
                 }
                 
-                // Calculate days since last birthday
-                const lastBirthday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate());
-                if (lastBirthday > today) {
-                    lastBirthday.setFullYear(lastBirthday.getFullYear() - 1);
-                }
-                const daysSinceLastBirthday = Math.floor((today - lastBirthday) / (1000 * 60 * 60 * 24));
+                // Format the output
+                let ageString = `${years} years`;
+                if (months > 0) ageString += `, ${months} months`;
+                if (days > 0) ageString += `, ${days} days`;
                 
-                return `${years} years, ${daysSinceLastBirthday} days`;
+                return ageString;
             }
-            document.addEventListener('DOMContentLoaded', () => {
+
+            function updateAge() {
                 const ageElement = document.getElementById('age');
                 if (ageElement) {
                     ageElement.textContent = calculateAge('2004-07-19');
                 }
-            });
+            }
+
+            // Update age immediately
+            document.addEventListener('DOMContentLoaded', updateAge);
+
+            // Update age every day at midnight
+            setInterval(() => {
+                const now = new Date();
+                if (now.getHours() === 0 && now.getMinutes() === 0) {
+                    updateAge();
+                }
+            }, 60000); // Check every minute
         </script>
     </div>
 
